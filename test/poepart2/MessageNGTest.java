@@ -1,139 +1,108 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/EmptyTestNGTest.java to edit this template
- */
+
 package poepart2;
 
-import static org.testng.Assert.*;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
+
 import org.testng.annotations.Test;
 
-/**
- *
- * @author Student
- */
 public class MessageNGTest {
-    
-    public MessageNGTest() {
-    }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @BeforeMethod
-    public void setUpMethod() throws Exception {
-    }
-
-    @AfterMethod
-    public void tearDownMethod() throws Exception {
-    }
-
-    /**
-     * Test of sendingMessages method, of class Message.
-     */
-    @Test
-    public void testSendingMessages() {
-        System.out.println("sendingMessages");
-        Message instance = new Message();
-        instance.sendingMessages();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of returnTotalMessages method, of class Message.
-     */
     @Test
     public void testReturnTotalMessages() {
-        System.out.println("returnTotalMessages");
         Message instance = new Message();
-        int expResult = 0;
-        int result = instance.returnTotalMessages();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.addMessage("+27834557896", "Hello there", "Sent");
+        instance.addMessage("+27838884567", "Good morning", "Sent");
+        instance.addMessage("+27834484567", "See you later", "Stored");
+
+        assertEquals(instance.returnTotalMessages(), 2);
     }
 
-    /**
-     * Test of createMessageHash method, of class Message.
-     */
     @Test
     public void testCreateMessageHash() {
-        System.out.println("createMessageHash");
-        String messageID = "";
-        int messageNumber = 0;
-        String messageText = "";
         Message instance = new Message();
-        String expResult = "";
-        String result = instance.createMessageHash(messageID, messageNumber, messageText);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        String result = instance.createMessageHash(
+                "1234567890", 2, "Hello there friend");
+
+        assertEquals(result, "12:2:HELLOFRIEND");
     }
 
-    /**
-     * Test of generateMessageID method, of class Message.
-     */
     @Test
     public void testGenerateMessageID() {
-        System.out.println("generateMessageID");
         Message instance = new Message();
-        String expResult = "";
+
         String result = instance.generateMessageID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertTrue(result.matches("[0-9]{10}"));
     }
 
-    /**
-     * Test of checkRecipientCell method, of class Message.
-     */
     @Test
     public void testCheckRecipientCell() {
-        System.out.println("checkRecipientCell");
-        String cellphone = "";
         Message instance = new Message();
-        String expResult = "";
-        String result = instance.checkRecipientCell(cellphone);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(
+                instance.checkRecipientCell("+27834557896"),
+                "Valid number");
+
+        assertEquals(
+                instance.checkRecipientCell("0834557896"),
+                "Valid number");
+
+        assertEquals(
+                instance.checkRecipientCell("12345"),
+                "Invalid number. Please enter a valid South African number.");
     }
 
-    /**
-     * Test of SentMessage method, of class Message.
-     */
     @Test
     public void testSentMessage() {
-        System.out.println("SentMessage");
-        Message instance = new Message();
-        String expResult = "";
-        String result = instance.SentMessage();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Message instance = new Message(new Scanner("1\n"));
+
+        assertEquals(instance.SentMessage(), "Sent");
     }
 
-    /**
-     * Test of printMessages method, of class Message.
-     */
     @Test
     public void testPrintMessages() {
-        System.out.println("printMessages");
         Message instance = new Message();
-        String expResult = "";
+
+        instance.addMessage(
+                "+27834557896", "Hello there", "Sent");
+
         String result = instance.printMessages();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertTrue(result.contains("Hello there"));
+        assertTrue(result.contains("+27834557896"));
+        assertTrue(result.contains("Sent"));
     }
-    
+
+    @Test
+    public void testStoredMessagesReadBackFromJson()
+            throws IOException {
+
+        Message original = new Message();
+
+        original.addMessage(
+                "+27834557896", "Hello from JSON", "Stored");
+
+        Path file = Files.createTempFile("messages", ".json");
+
+        original.saveStoredMessagesToJson(file.toString());
+
+        Message restored = new Message();
+
+        assertEquals(
+                restored.loadStoredMessagesFromJson(file.toString()), 1);
+
+        assertEquals(
+                restored.getStoredMessages(),
+                original.getStoredMessages());
+
+        Files.deleteIfExists(file);
+    }
 }

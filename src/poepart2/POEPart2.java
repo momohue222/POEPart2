@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package poepart2;
 
 import java.util.Scanner;
@@ -68,36 +64,47 @@ public class POEPart2 {
             loginPassword = scan.nextLine();
 
             loginStatus = register.LoginUser(loginName, loginPassword);
-        
-        System.out.println(register.returnLoginStatus(loginStatus));
         }
-    
+
+        System.out.println(register.returnLoginStatus(loginStatus));
         System.out.println("Login complete.");
- 
 
+        // The same Scanner is shared so System.in is only read through one object.
+        Message msg = new Message(scan);
+        msg.setSender(firstName + " " + lastName + " (" + cellphone + ")");
 
-       Message msg = new Message();
-       
-       int option;
-       
-       do{
-           System.out.println("\n===== Select any of the option below =====");
-           System.out.println("1. Send message");
-           System.out.println("2. Coming soon");
-           System.out.println("3. Exit");
-           
-           option = scan.nextInt();
-           
-           switch(option){
-               
-               case 1 -> msg.sendingMessages();
-               case 2 -> System.out.println("Coming soon");
-               case 3 -> System.out.println("Good bye love you");
-               default -> System.out.println("Invalid option!!");
-               
-           }
-           
-       }while(option !=3);
-     
+        // Part 3: read the stored messages from the JSON file into the arrays
+        int loaded = msg.loadStoredMessages();
+        if (loaded > 0) {
+            System.out.println(loaded + " stored message(s) loaded from " + Message.JSON_FILE);
+        }
+
+        int option = 0;
+
+        do {
+            System.out.println("\n===== Select any of the option below =====");
+            System.out.println("1. Send message");
+            System.out.println("2. Coming soon");
+            System.out.println("3. Exit");
+            System.out.println("4. Stored Messages");
+
+            try {
+                option = Integer.parseInt(scan.nextLine().trim());
+            } catch (NumberFormatException e) {
+                option = 0;
+            }
+
+            switch (option) {
+
+                case 1 -> msg.sendingMessages();
+                case 2 -> System.out.println("Coming soon");
+                case 3 -> System.out.println("Good bye love you");
+                case 4 -> msg.storedMessagesMenu();
+                default -> System.out.println("Invalid option!!");
+
+            }
+
+        } while (option != 3);
+
     }
 }
