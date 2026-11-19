@@ -1,14 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poepart2;
 
-/**
- *
- * @author Student
- */
-public class registration { //start of class
+public class registration {
 
     String firstName;
     String lastName;
@@ -16,23 +8,21 @@ public class registration { //start of class
     String passWord;
     String cellPhone;
 
-    public boolean checkUserName(String username) { //start of username method
+    public boolean checkUserName(String username) {
         return username != null && username.contains("_") && username.length() <= 5;
-    } //end of username method
+    }
 
-    public boolean checkPasswordComplexity(String password) { //start of password method
+    public boolean checkPasswordComplexity(String password) {
         return password != null &&
                 password.length() >= 8 &&
-                password.matches(".*[A-Z].*") &&      // capital letter
-                password.matches(".*\\d.*") &&        // numbers
-                password.matches(".*[^a-zA-Z0-9].*"); // special character
-    } //end of password method
+                password.matches(".*[A-Z].*") &&
+                password.matches(".*\\d.*") &&
+                password.matches(".*[^a-zA-Z0-9].*");
+    }
 
-    public boolean checkCellPhoneNumber(String cellphone) { //start of cellphone method
-        // South African international code (+27) followed by exactly 9 digits
-        // = 11 characters after the '+', 12 characters total.
+    public boolean checkCellPhoneNumber(String cellphone) {
         return cellphone != null && cellphone.matches("^\\+27\\d{9}$");
-    } // end of cellphone method
+    }
 
     public String registerUser(String firstName, String lastName, String username, String password, String cellphone) {
 
@@ -68,4 +58,4 @@ public class registration { //start of class
                 checkCellPhoneNumber(cellphone);
     }
 
-} //end of class
+}
