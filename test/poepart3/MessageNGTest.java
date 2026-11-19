@@ -1,5 +1,5 @@
 
-package poepart2;
+package poepart3;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -10,8 +10,8 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 import org.testng.annotations.Test;
-
-public class MessageNGTest {
+import poepart2.*;
+public class MessageNGTest { 
 
     @Test
     public void testReturnTotalMessages() {

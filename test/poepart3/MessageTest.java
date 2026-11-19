@@ -1,4 +1,4 @@
-package poepart2;
+package poepart3;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
+import poepart2.Message;
 public class MessageTest {
 
     private Message msg;
