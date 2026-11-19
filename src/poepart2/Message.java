@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
+/**mo
  * Part 2 (sending messages) plus Part 3 (arrays, stored messages menu, JSON).
  *
  * @author Student
