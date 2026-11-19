@@ -1,120 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/EmptyTestNGTest.java to edit this template
- */
 package poepart3;
 
-import static org.testng.Assert.*;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
-import poepart2.*;
-/**
- *
- * @author Student
- */
+import poepart2.registration;
+
 public class registrationNGTest {
-    
-    public registrationNGTest() {
-    }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @BeforeMethod
-    public void setUpMethod() throws Exception {
-    }
-
-    @AfterMethod
-    public void tearDownMethod() throws Exception {
-    }
-
-    /**
-     * Test of checkUserName method, of class registration.
-     */
     @Test
     public void testCheckUserName() {
-        System.out.println("checkUserName");
-        String username = "";
         registration instance = new registration();
-        boolean expResult = false;
-        boolean result = instance.checkUserName(username);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.checkUserName("kyl_1"));
+        assertFalse(instance.checkUserName("kyle!!!!!!!"));
     }
 
-    /**
-     * Test of checkPasswordComplexity method, of class registration.
-     */
     @Test
     public void testCheckPasswordComplexity() {
-        System.out.println("checkPasswordComplexity");
-        String password = "";
         registration instance = new registration();
-        boolean expResult = false;
-        boolean result = instance.checkPasswordComplexity(password);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.checkPasswordComplexity("Ch&&sec@ke99!"));
+        assertFalse(instance.checkPasswordComplexity("password"));
     }
 
-    /**
-     * Test of checkCellPhoneNumber method, of class registration.
-     */
     @Test
     public void testCheckCellPhoneNumber() {
-        System.out.println("checkCellPhoneNumber");
-        String cellphone = "";
         registration instance = new registration();
-        boolean expResult = false;
-        boolean result = instance.checkCellPhoneNumber(cellphone);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.checkCellPhoneNumber("+27838968976"));
+        assertFalse(instance.checkCellPhoneNumber("08966553"));
     }
 
-    /**
-     * Test of registerUser method, of class registration.
-     */
     @Test
     public void testRegisterUser() {
-        System.out.println("registerUser");
-        String firstName = "";
-        String lastName = "";
-        String username = "";
-        String password = "";
-        String cellphone = "";
         registration instance = new registration();
-        String expResult = "";
-        String result = instance.registerUser(firstName, lastName, username, password, cellphone);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String validResult = instance.registerUser("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertEquals(validResult, "Username successfully captured. Password successfully captured. Cell phone number successfully added.");
     }
 
-    /**
-     * Test of registerStatus method, of class registration.
-     */
     @Test
     public void testRegisterStatus() {
-        System.out.println("registerStatus");
-        String username = "";
-        String password = "";
-        String cellphone = "";
         registration instance = new registration();
-        boolean expResult = false;
-        boolean result = instance.registerStatus(username, password, cellphone);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.registerStatus("kyl_1", "Ch&&sec@ke99!", "+27838968976"));
+        assertFalse(instance.registerStatus("kyl_1", "password", "08966553"));
     }
-    
 }
